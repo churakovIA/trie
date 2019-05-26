@@ -42,6 +42,8 @@
         <slf4j.version>1.7.25</slf4j.version>
         <!--Tools-->
         <ehcache.version>3.6.1</ehcache.version>
+        <!-- Primefaces-->
+        <primefaces-version>7.0</primefaces-version>
     </properties>
 
     <dependencies>
@@ -78,6 +80,11 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring-data-jpa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.7.RELEASE</version>
         </dependency>
         <!--Test-->
         <dependency>
@@ -124,6 +131,26 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>2.4.0-b180830.0438</version>
         </dependency>
+
+        <!-- JSF-->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- Primefaces-->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces-version}</version>
+        </dependency>
+
 
     </dependencies>
 

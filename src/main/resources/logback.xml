@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.churakov.graduation" level="debug"/>
+    <logger name="ru.churakov.trie" level="debug"/>
 
     <root level="info">
         <appender-ref ref="console"/>

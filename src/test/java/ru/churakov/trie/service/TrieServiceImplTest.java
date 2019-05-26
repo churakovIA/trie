@@ -1,6 +1,5 @@
 package ru.churakov.trie.service;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.churakov.trie.model.TrieNode;
@@ -65,6 +64,23 @@ class TrieServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
+    void insertUpperCase(){
+        service.insert("Щука");
+        List<String> words = new ArrayList<>(WORDS);
+        words.add("щука");
+        testInsert(words, 39);
+    }
+
+
+    @Test
+    void insertIllegalArgument(){
+        service.insert("ч_ек");
+        service.insert("test");
+        service.insert("чек+");
+        testInsert(WORDS, 35);
+    }
+
+    @Test
     void getAllByPrefix() {
         assertMatch(service.getAllByPrefix("с", Integer.MAX_VALUE),
                 "суслик", "сусло", "соль", "солнце", "сани");
@@ -73,6 +89,11 @@ class TrieServiceImplTest extends AbstractServiceTest {
         assertMatch(service.getAllByPrefix("чт", Integer.MAX_VALUE), "чтобы", "чтоб");
         assertMatch(service.getAllByPrefix("п", 4), "пирамида");
         assertMatch(service.getAllByPrefix("ы", 4));
+    }
+
+    @Test
+    void getAllByPrefixUpperCase() {
+        assertMatch(service.getAllByPrefix("чТ", 1), "чтоб");
     }
 
     @Test
@@ -102,6 +123,13 @@ class TrieServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
+    void deleteIllegalArgument() {
+        assertFalse(service.delete("чек+"));
+        List<String> actual = service.getAllByPrefix("", Integer.MAX_VALUE);
+        assertMatch(actual, WORDS);
+    }
+
+    @Test
     void deleteIncluded() {
         String w = "чтоб";
         assertTrue(service.delete(w));
@@ -122,16 +150,5 @@ class TrieServiceImplTest extends AbstractServiceTest {
         assertEquals(crudTrieRepository.count(), count);
 
         assertEquals(crudTrieRepository.getAllByEndTrue().size(), expected.size());
-    }
-
-    @Disabled
-    @Test void testCache(){
-        service.getAllByPrefix("с", Integer.MAX_VALUE);
-        service.getAllByPrefix("с", Integer.MAX_VALUE);
-        service.getAllByPrefix("п", 4);
-        service.getAllByPrefix("п", 4);
-        service.getAllByPrefix("с", Integer.MAX_VALUE);
-        service.delete("мир");
-        service.getAllByPrefix("с", Integer.MAX_VALUE);
     }
 }

@@ -7,7 +7,7 @@ import ru.churakov.trie.model.TrieNode;
 
 import java.util.List;
 
-import static ru.churakov.trie.Util.TrieUtil.getSpecForPrefix;
+import static ru.churakov.trie.util.TrieUtil.getSpecForPrefix;
 
 @Repository
 @Transactional(readOnly = true)

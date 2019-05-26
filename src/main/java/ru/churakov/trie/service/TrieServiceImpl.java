@@ -9,11 +9,15 @@ import ru.churakov.trie.model.TrieNode;
 import ru.churakov.trie.repository.TrieRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Service
+import static ru.churakov.trie.util.TrieUtil.isAllowedWord;
+import static ru.churakov.trie.util.TrieUtil.prepareWord;
+
+@Service("trieService")
 public class TrieServiceImpl implements TrieService {
 
     @Autowired
@@ -24,7 +28,11 @@ public class TrieServiceImpl implements TrieService {
     @Override
     public void insert(String word) {
         Objects.requireNonNull(word, "word must not be null");
-        TrieNode branch = getBranch(word);
+        String preparedWord = prepareWord(word);
+        if(!isAllowedWord(preparedWord)){
+            return;
+        }
+        TrieNode branch = getBranch(preparedWord);
         if (branch.getParent() != null) {
             branch.setEnd(true);
         }
@@ -36,7 +44,11 @@ public class TrieServiceImpl implements TrieService {
     @Override
     public boolean delete(String word) {
         Objects.requireNonNull(word, "word must not be null");
-        TrieNode branch = getBranch(word);
+        String preparedWord = prepareWord(word);
+        if(!isAllowedWord(preparedWord)){
+            return false;
+        }
+        TrieNode branch = getBranch(preparedWord);
         if (!branch.isNew() && branch.isEnd()) {
             branch.setEnd(false);
             return true;
@@ -49,12 +61,16 @@ public class TrieServiceImpl implements TrieService {
     @Override
     public List<String> getAllByPrefix(String prefix, int limit) {
         Objects.requireNonNull(prefix, "prefix must not be null");
+        String preparedWord = prepareWord(prefix);
+        if(!isAllowedWord(preparedWord)){
+            return Collections.emptyList();
+        }
         if (limit < 1) limit = Integer.MAX_VALUE;
-        List<TrieNode> nodes = repository.findAllByPrefix(prefix);
+        List<TrieNode> nodes = repository.findAllByPrefix(preparedWord);
         List<TrieNode> leaves = new ArrayList<>();
         readWords(nodes, leaves, limit);
         return leaves.stream()
-                .map(n -> wordFromTreeNode(n))
+                .map(this::wordFromTreeNode)
                 .collect(Collectors.toList());
     }
 

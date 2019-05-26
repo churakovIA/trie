@@ -1,4 +1,4 @@
-package ru.churakov.trie.Util;
+package ru.churakov.trie.util;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.churakov.trie.model.TrieNode;
@@ -31,5 +31,13 @@ public class TrieUtil {
             }
             return cb.and(predicates);
         };
+    }
+
+    public static String prepareWord(String word){
+        return word.toLowerCase();
+    }
+
+    public static boolean isAllowedWord(String word){
+        return word!=null && ("".equals(word) || prepareWord(word).chars().allMatch(i -> i >= 'а' && i <= 'я'));
     }
 }
