@@ -1,5 +1,18 @@
 DELETE FROM al_tree;
+DELETE FROM words;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
+
+INSERT INTO words (name, length) VALUES
+('суслик', 6),
+('соль', 4),
+('солнце', 6),
+('сани', 4),
+('мир', 3),
+('пирамида', 8),
+('сусло', 5),
+('чтобы', 5),
+('чтоб', 4),
+('чек', 3);
 
  INSERT INTO al_tree (id, name, end_word, parent_id) VALUES
  (1007, '', false, null),
