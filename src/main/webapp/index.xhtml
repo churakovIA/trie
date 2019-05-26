@@ -19,6 +19,9 @@
         </style>
     </h:head>
     <h:body>
+        <h:form>
+            <p:commandButton value="Word catalog" action="/views/wordCatalog.xhtml?faces-redirect=true"/>
+        </h:form>
         <h:form styleClass="center">
             <h:outputText value="Input text: " />
             <p:autoComplete value="#{root.text}" completeMethod="#{root.complete}" />
