@@ -15,10 +15,18 @@ public class WordController {
     @ManagedProperty(value = "#{wordService}")
     private WordService service;
 
+    private String id;
     private String name;
     private String status;
+    private String length;
 
-    private String id;
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 
     public String getId() {
         return id;
@@ -27,14 +35,6 @@ public class WordController {
     public void setId(String id) {
         this.id = id;
     }
-
-//    @PostConstruct
-//    public void init(){
-//        FacesContext fc = FacesContext.getCurrentInstance();
-//        Map<String,String> params =
-//                fc.getExternalContext().getRequestParameterMap();
-//        //name =  params.get("name");
-//    }
 
     public WordService getService() {
         return service;
@@ -60,18 +60,18 @@ public class WordController {
         this.status = status;
     }
 
-    public String save(){
+    public String save() {
         WordTo wordTo = new WordTo(name, Status.valueOf(status));
-        if(id==null){
+        if (id == null) {
             service.create(wordTo);
-        }else {
+        } else {
             service.update(wordTo, Integer.parseInt(id));
         }
 
         return "/views/wordCatalog.xhtml?faces-redirect=true";
     }
 
-    public String close(){
+    public String close() {
         return "/views/wordCatalog.xhtml?faces-redirect=true";
     }
 }

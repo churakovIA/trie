@@ -1,6 +1,10 @@
 package ru.churakov.trie.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.churakov.trie.model.Status;
@@ -10,12 +14,14 @@ import ru.churakov.trie.to.WordTo;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-import static ru.churakov.trie.util.WordUtil.fromTo;
-import static ru.churakov.trie.util.WordUtil.updateFromTo;
+import static ru.churakov.trie.util.WordUtil.*;
 
 @Service("wordService")
 public class WordServiceImpl implements WordService {
+
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     CrudWordRepository wordRepository;
@@ -45,7 +51,7 @@ public class WordServiceImpl implements WordService {
         Objects.requireNonNull(wordTo);
         wordRepository.findById(id).ifPresent(word -> {
             trieService.delete(word.getName());
-            if(wordTo.getStatus()==Status.ACTIVE){
+            if (wordTo.getStatus() == Status.ACTIVE) {
                 trieService.insert(wordTo.getName());
             }
             updateFromTo(word, wordTo);
@@ -60,5 +66,19 @@ public class WordServiceImpl implements WordService {
     @Override
     public List<Word> getAll() {
         return wordRepository.findAll();
+    }
+
+    @Override
+    public Page<Word> getAll(int pageNumber, int pageSize, Optional<Sort> sort) {
+        log.debug("getAll(pageNumber={},pageSize={},sort={})", pageNumber, pageSize, sort);
+        return wordRepository.findAll(getPageable(pageNumber,pageSize,sort));
+    }
+
+    @Override
+    public Page<Word> getAllByName(String name, int pageNumber, int pageSize, Optional<Sort> sort) {
+        log.debug("getAllByNameStartWith(name={},pageNumber={},pageSize={},sort={})", name, pageNumber, pageSize, sort);
+        return wordRepository.findAll(
+                (root, query, cb) -> cb.like(root.get("name"),name+"%"),
+                getPageable(pageNumber,pageSize,sort));
     }
 }

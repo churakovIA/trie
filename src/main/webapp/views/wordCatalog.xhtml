@@ -11,39 +11,45 @@
 
     <h:body>
         <h:form>
-            <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true"/>
 
-            <br/>
 
-            <p:dataTable var="word" value="#{wordCatalog.words}" style="margin-top:20px;">
-                <p:column headerText="Слово" sortBy="#{word.name}">
-                    <h:outputText value="#{word.name}" />
-                </p:column>
-                <p:column headerText="Статус" sortBy="#{word.status}">
-                    <h:outputText value="#{word.status}"/>
-                </p:column>
-                <p:column headerText="Длинна" sortBy="#{word.length}">
-                    <h:outputText value="#{word.length}"/>
-                </p:column>
+            <h:panelGrid columns="1" style="" cellpadding="5">
 
-                <p:column>
+                <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true"/>
 
-                    <f:facet name="header">
-                        <p:commandButton  value="+" action="/views/word.xhtml?faces-redirect=true"/>
-                    </f:facet>
-                    <p:commandButton value="Edit" action="/views/word.xhtml?faces-redirect=true&amp;includeViewParams=true">
-                        <f:param name="id" value="#{word.id}" />
-                        <f:param name="name" value="#{word.name}" />
-                        <f:param name="status" value="#{word.status}" />
-                    </p:commandButton>
-                    <p:commandButton value="Delete" action="#{wordCatalog.delete}"
-                                     actionListener="#{wordCatalog.loadCurrentRequest}" immediate="true">
-                        <f:attribute name="word" value="#{word}"/>
-                    </p:commandButton>
-                </p:column>
-                //more columns
-            </p:dataTable>
+                <p:dataTable var="word" value="#{wordCatalog.model}"  paginator="true" rows="10" sortBy="name"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15" lazy="true"
+                             style="width: 50%;">
+                    <p:column headerText="Слово" sortBy="#{word.name}" filterBy="#{word.name}">
+                        <h:outputText value="#{word.name}" />
+                    </p:column>
+                    <p:column headerText="Статус" sortBy="#{word.status}">
+                        <h:outputText value="#{word.status}"/>
+                    </p:column>
+                    <p:column headerText="Длинна" sortBy="#{word.length}" style="text-align: center">
+                        <h:outputText value="#{word.length}"/>
+                    </p:column>
 
+                    <p:column style="text-align: center">
+
+                        <f:facet name="header">
+                            <p:commandButton  value="+" action="/views/word.xhtml?faces-redirect=true"/>
+                        </f:facet>
+                        <p:commandButton value="Edit" action="/views/word.xhtml?faces-redirect=true&amp;includeViewParams=true">
+                            <f:param name="id" value="#{word.id}" />
+                            <f:param name="name" value="#{word.name}" />
+                            <f:param name="status" value="#{word.status}" />
+                        </p:commandButton>
+                        <p:commandButton value="Delete" action="#{wordCatalog.delete}"
+                                         actionListener="#{wordCatalog.loadCurrentRequest}" immediate="true">
+                            <f:attribute name="word" value="#{word}"/>
+                        </p:commandButton>
+                    </p:column>
+                    //more columns
+                </p:dataTable>
+
+            </h:panelGrid>
 
         </h:form>
     </h:body>
