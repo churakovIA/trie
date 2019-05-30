@@ -1,6 +1,5 @@
 package ru.churakov.trie.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,11 @@ import static ru.churakov.trie.util.TrieUtil.prepareWord;
 @Service("trieService")
 public class TrieServiceImpl implements TrieService {
 
-    @Autowired
-    TrieRepository repository;
+    private final TrieRepository repository;
+
+    public TrieServiceImpl(TrieRepository repository) {
+        this.repository = repository;
+    }
 
     @CacheEvict(value = "words", allEntries = true)
     @Transactional

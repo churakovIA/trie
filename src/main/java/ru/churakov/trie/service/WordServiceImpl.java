@@ -2,7 +2,6 @@ package ru.churakov.trie.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,11 +22,14 @@ public class WordServiceImpl implements WordService {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    CrudWordRepository wordRepository;
+    private final CrudWordRepository wordRepository;
 
-    @Autowired
-    TrieService trieService;
+    private final TrieService trieService;
+
+    public WordServiceImpl(CrudWordRepository wordRepository, TrieService trieService) {
+        this.wordRepository = wordRepository;
+        this.trieService = trieService;
+    }
 
     @Transactional
     @Override

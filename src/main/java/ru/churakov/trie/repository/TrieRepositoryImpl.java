@@ -1,6 +1,5 @@
 package ru.churakov.trie.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.churakov.trie.model.TrieNode;
@@ -13,8 +12,11 @@ import static ru.churakov.trie.util.TrieUtil.getSpecForPrefix;
 @Transactional(readOnly = true)
 public class TrieRepositoryImpl implements TrieRepository {
 
-    @Autowired
-    private CrudTrieRepository repository;
+    private final CrudTrieRepository repository;
+
+    public TrieRepositoryImpl(CrudTrieRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public TrieNode findByPrefix(String prefix) {
