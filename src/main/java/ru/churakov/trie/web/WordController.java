@@ -1,15 +1,15 @@
 package ru.churakov.trie.web;
 
-import org.springframework.web.context.annotation.SessionScope;
 import ru.churakov.trie.model.Status;
 import ru.churakov.trie.service.WordService;
 import ru.churakov.trie.to.WordTo;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "word")
-@SessionScope
+@SessionScoped
 public class WordController {
 
     @ManagedProperty(value = "#{wordService}")

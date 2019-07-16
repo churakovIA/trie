@@ -16,5 +16,5 @@ _Префиксное дерево_ (также бор, луч, нагружен
 - Spring data JPA
 - JPA Criteria API
 - Hibernate
-- PostgreeSQL
+- PostgreSQL
 - JUnit5 

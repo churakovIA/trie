@@ -4,8 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.churakov.trie.model.TrieNode;
 
-import java.util.List;
-
 import static ru.churakov.trie.util.TrieUtil.getSpecForPrefix;
 
 @Repository
@@ -21,11 +19,6 @@ public class TrieRepositoryImpl implements TrieRepository {
     @Override
     public TrieNode findByPrefix(String prefix) {
         return repository.findOne(getSpecForPrefix(prefix)).orElse(null);
-    }
-
-    @Override
-    public List<TrieNode> findAllByPrefix(String prefix) {
-        return repository.findAll(getSpecForPrefix(prefix));
     }
 
     @Transactional

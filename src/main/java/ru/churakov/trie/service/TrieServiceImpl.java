@@ -50,9 +50,9 @@ public class TrieServiceImpl implements TrieService {
         if(!isAllowedWord(preparedWord)){
             return false;
         }
-        TrieNode branch = getBranch(preparedWord);
-        if (!branch.isNew() && branch.isEnd()) {
-            branch.setEnd(false);
+        TrieNode node = repository.findByPrefix(preparedWord);
+        if (node != null && node.isEnd()) {
+            node.setEnd(false);
             return true;
         }
         return false;
@@ -68,9 +68,10 @@ public class TrieServiceImpl implements TrieService {
             return Collections.emptyList();
         }
         if (limit < 1) limit = Integer.MAX_VALUE;
-        List<TrieNode> nodes = repository.findAllByPrefix(preparedWord);
+        TrieNode node = repository.findByPrefix(preparedWord);
+        if(node==null) return Collections.emptyList();
         List<TrieNode> leaves = new ArrayList<>();
-        readWords(nodes, leaves, limit);
+        readWords(node.getChildren(), leaves, limit);
         return leaves.stream()
                 .map(this::wordFromTreeNode)
                 .collect(Collectors.toList());

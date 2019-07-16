@@ -28,13 +28,17 @@
     </build>
 
     <properties>
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <!--DB-->
         <postgresql.version>42.2.5</postgresql.version>
         <!-- Hibernate -->
         <hibernate.version>5.3.7.Final</hibernate.version>
         <!--Spring-->
         <spring.version>5.1.2.RELEASE</spring.version>
-        <spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>2.1.8.RELEASE</spring-data-jpa.version>
         <!--    Tests  -->
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
         <!-- Logging -->
@@ -142,7 +146,7 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
-            <version>2.4.0</version>
+            <version>2.2.19</version>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
