@@ -38,7 +38,7 @@
         <hibernate.version>5.3.7.Final</hibernate.version>
         <!--Spring-->
         <spring.version>5.1.2.RELEASE</spring.version>
-        <spring-data-jpa.version>2.1.8.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>2.1.9.RELEASE</spring-data-jpa.version>
         <!--    Tests  -->
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
         <!-- Logging -->
